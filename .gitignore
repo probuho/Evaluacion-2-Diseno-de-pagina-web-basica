@@ -3,3 +3,4 @@ Thumbs.db
 *.log
 brain/
 .gemini/
+game-compatibility-checker/
