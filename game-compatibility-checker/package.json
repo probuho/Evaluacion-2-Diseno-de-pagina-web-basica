@@ -1,0 +1,19 @@
+{
+  "name": "game-compatibility-checker",
+  "version": "1.0.0",
+  "description": "Aplicación web para verificar compatibilidad de juegos con tu hardware",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["games", "hardware", "compatibility"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "node-fetch": "^2.7.0"
+  }
+}

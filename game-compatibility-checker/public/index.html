@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Compatibilidad de Juegos</title>
+    <meta name="description" content="Verifica si tu PC puede ejecutar tus juegos favoritos. Detecta automáticamente tu hardware y compara con los requisitos del sistema.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Fondo animado -->
+    <div class="background-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 16V8C21 6.89543 20.1046 6 19 6H5C3.89543 6 3 6.89543 3 8V16C3 17.1046 3.89543 18 5 18H19C20.1046 18 21 17.1046 21 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7 10H7.01M11 10H11.01M7 14H7.01M11 14H11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16 11L18 13L16 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h1>Game Compatibility Checker</h1>
+            </div>
+            <p class="subtitle">Descubre qué juegos puede ejecutar tu PC</p>
+        </header>
+
+        <!-- Sección de carga de hardware -->
+        <section class="upload-section" id="uploadSection">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h2>
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 3H5C3.89543 3 3 3.89543 3 5V9M9 3H15M9 3V9M15 3H19C20.1046 3 21 3.89543 21 5V9M15 3V9M9 9H15M9 9V15M15 9V15M9 15H15M9 15V19C9 20.1046 9.89543 21 11 21H13C14.1046 21 15 20.1046 15 19V15M3 9V15M21 9V15M3 15V19C3 20.1046 3.89543 21 5 21H7M21 15V19C21 20.1046 20.1046 21 19 21H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Paso 1: Detecta tu Hardware
+                    </h2>
+                    <p class="card-description">Ejecuta el script de PowerShell para obtener las especificaciones de tu PC</p>
+                </div>
+                
+                <div class="instructions">
+                    <div class="instruction-step">
+                        <span class="step-number">1</span>
+                        <div class="step-content">
+                            <h3>Abre PowerShell como Administrador</h3>
+                            <p>Busca "PowerShell" en el menú Inicio, clic derecho y selecciona "Ejecutar como administrador"</p>
+                        </div>
+                    </div>
+                    
+                    <div class="instruction-step">
+                        <span class="step-number">2</span>
+                        <div class="step-content">
+                            <h3>Ejecuta el script</h3>
+                            <div class="code-block">
+                                <code id="scriptPath">.\Get-HardwareInfo.ps1</code>
+                                <button class="btn-copy" onclick="copyScriptPath()">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8 4V16C8 17.1046 8.89543 18 10 18H18C19.1046 18 20 17.1046 20 16V7.24162C20 6.71202 19.7893 6.20402 19.4142 5.82894L16.1716 2.58579C15.7965 2.2107 15.288 2 14.7584 2H10C8.89543 2 8 2.89543 8 4Z" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M16 18V20C16 21.1046 15.1046 22 14 22H6C4.89543 22 4 21.1046 4 20V9C4 7.89543 4.89543 7 6 7H8" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                    Copiar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="instruction-step">
+                        <span class="step-number">3</span>
+                        <div class="step-content">
+                            <h3>Carga el archivo generado</h3>
+                            <p>El script creará un archivo <code>hardware.json</code> en la misma carpeta</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="auto-detect-section">
+                    <button class="btn btn-primary" id="autoDetectBtn">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Detectar Hardware Automáticamente
+                    </button>
+                    <p class="auto-detect-hint">O carga manualmente el archivo hardware.json</p>
+                </div>
+
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" accept=".json" hidden>
+                    <div class="upload-content">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 18C4.23858 18 2 15.7614 2 13C2 10.2386 4.23858 8 7 8C7.33333 5.33333 9.4 0 16 2C19.5 3.5 21 7 21 9C21 9 23 9 23 12C23 15 21 16 21 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 13V21M12 13L9 16M12 13L15 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h3>Arrastra el archivo aquí</h3>
+                        <p>o haz clic para seleccionar <strong>hardware.json</strong></p>
+                    </div>
+                </div>
+
+                <div class="hardware-info hidden" id="hardwareInfo">
+                    <h3>Tu Hardware</h3>
+                    <div class="hardware-grid" id="hardwareGrid"></div>
+                    <button class="btn btn-primary" id="checkGamesBtn">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Verificar Compatibilidad
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de resultados -->
+        <section class="results-section hidden" id="resultsSection">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h2>
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 15L11 17L15 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Resultados de Compatibilidad
+                    </h2>
+                    <div class="results-stats" id="resultsStats"></div>
+                </div>
+
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="recommended">Recomendados ✓</button>
+                    <button class="filter-btn" data-filter="minimum">Mínimos ✓</button>
+                    <button class="filter-btn" data-filter="incompatible">Incompatibles ✗</button>
+                </div>
+
+                <div class="search-bar">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                        <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Buscar juegos...">
+                </div>
+
+                <div class="games-grid" id="gamesGrid"></div>
+            </div>
+        </section>
+
+        <!-- Loading -->
+        <div class="loading hidden" id="loading">
+            <div class="spinner"></div>
+            <p>Analizando compatibilidad...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
